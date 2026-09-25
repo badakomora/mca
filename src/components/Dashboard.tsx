@@ -28,7 +28,8 @@ type Activity = {
 };
 
 type ManifestoItem = {
-  title: string;
+  issueCategory: string;
+  target: string;
   area: string;
   progress: number;
   status: "Planned" | "In Progress" | "Completed";
@@ -51,60 +52,60 @@ type RecentActivity = {
 /* Data */
 /* -------------------------------------------------------------------------- */
 
-const previousVoterBaseline = 12450;
-const currentSupporters = 7820;
+const previousVoterBaseline = 18556;
+const currentSupporters = 324;
 
 const issues: Issue[] = [
   {
-    title: "Water supply interruptions",
-    area: "Area A",
-    category: "Water",
+    title: "Garbage Management and Sanitation",
+    area: "Highlevel, Asian quarters and Ganjoni",
+    category: "Environment",
     status: "In Progress",
     lastUpdate: "2 days ago",
   },
   {
-    title: "Road and drainage maintenance",
-    area: "Area B",
-    category: "Infrastructure",
+    title: "Community Violence",
+    area: "King'orani and surrounding estates",
+    category: "Security",
     status: "Raised",
     lastUpdate: "5 days ago",
   },
   {
     title: "Youth employment opportunities",
-    area: "Area C",
+    area: "Across the ward",
     category: "Youth",
-    status: "Raised",
+    status: "Resolved",
     lastUpdate: "1 week ago",
   },
   {
-    title: "Health facility service gaps",
-    area: "Area D",
-    category: "Health",
-    status: "Resolved",
+    title: "Land, Roads and Public space management",
+    area: "Shimanzi Railways and neighbouring parastatal lines",
+    category: "Governance",
+    status: "Raised",
     lastUpdate: "1 week ago",
   },
 ];
 
 const engagements: Engagement[] = [
   {
-    area: "Area A",
-    date: "22 Sep 2026",
-    discussion: "Water access and supply",
-    biggestProblem: "Frequent water interruptions",
-    status: "Follow-up",
+    area: "Sacred Heart Primary School",
+    date: "3672 Voters",
+    discussion: "Ganjoni",
+    biggestProblem: "Garbage Management and Sanitation",
+    status: "Open",
   },
   {
-    area: "Area B",
-    date: "18 Sep 2026",
-    discussion: "Roads and drainage",
+    area: "Makupa Primary School",
+    date: "3672 Voters",
+    discussion: "Majengo",
     biggestProblem: "Poor drainage during heavy rain",
     status: "Open",
   },
   {
-    area: "Area C",
-    date: "14 Sep 2026",
-    discussion: "Youth opportunities",
-    biggestProblem: "Limited employment opportunities",
+    area: "Makande KPA Nursery School",
+    date: "1854 Voters",
+    discussion: "Shimanzi",
+    biggestProblem: "Poor drainage during heavy rain and Limited employment opportunities",
     status: "Follow-up",
   },
 ];
@@ -142,67 +143,220 @@ const activities: Activity[] = [
 
 const manifesto: ManifestoItem[] = [
   {
-    title: "Improve water access",
-    area: "Water",
-    progress: 60,
-    status: "In Progress",
-  },
-  {
-    title: "Improve roads and drainage",
-    area: "Infrastructure",
-    progress: 30,
-    status: "In Progress",
-  },
-  {
-    title: "Support youth opportunities",
-    area: "Youth",
-    progress: 20,
+    issueCategory: "Youth & Employment",
+    target: "Increase youth access to employment and economic opportunities",
+    area: "Ward-wide",
+    progress: 0,
     status: "Planned",
   },
   {
-    title: "Improve health services",
-    area: "Health",
-    progress: 100,
-    status: "Completed",
+    issueCategory: "Education",
+    target: "Improve access to educational and skills-development opportunities",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
+  },
+  {
+    issueCategory: "Healthcare",
+    target: "Improve access to quality healthcare services",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
+  },
+  {
+    issueCategory: "Water & Sanitation",
+    target: "Improve access to clean water, drainage and sanitation",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
+  },
+  {
+    issueCategory: "Roads & Infrastructure",
+    target: "Improve roads, drainage, lighting and public facilities",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
+  },
+  {
+    issueCategory: "Business & Livelihoods",
+    target: "Support local businesses, traders and income-generating activities",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
+  },
+  {
+    issueCategory: "Environment & Cleanliness",
+    target: "Improve waste management, cleanliness and environmental protection",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
+  },
+  {
+    issueCategory: "Security",
+    target: "Strengthen community safety and coordination on security concerns",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
+  },
+  {
+    issueCategory: "Housing & Settlements",
+    target: "Advocate for improved basic services and living conditions",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
+  },
+  {
+    issueCategory: "Women Empowerment",
+    target: "Expand women's access to skills, entrepreneurship and economic opportunities",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
+  },
+  {
+    issueCategory: "Persons with Disabilities",
+    target: "Promote inclusion, accessibility and participation in ward programs",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
+  },
+  {
+    issueCategory: "Sports & Talent",
+    target: "Support sports, talent development and youth recreation",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
+  },
+  {
+    issueCategory: "Community Participation",
+    target: "Strengthen resident participation in ward planning and development",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
+  },
+  {
+    issueCategory: "Accountability & Transparency",
+    target: "Track ward projects, implementation and community feedback",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
+  },
+  {
+    issueCategory: "Digital Access",
+    target: "Expand digital literacy, technology access and digital opportunities",
+    area: "Ward-wide",
+    progress: 0,
+    status: "Planned",
   },
 ];
 
 const electionDates: ElectionDate[] = [
   {
-    date: "15 Oct 2026",
-    targetDate: "2026-10-15",
-    title: "Political party authorised persons deadline",
-    type: "IEBC / Party",
+    date: "12 Nov 2026",
+    targetDate: "2026-11-12",
+    title: "Submission of party nomination rules",
+    type: "Political Party / IEBC",
   },
   {
-    date: "30 Oct 2026",
-    targetDate: "2026-10-30",
-    title: "Party nomination rules certification",
-    type: "IEBC / Party",
+    date: "26 Nov 2026",
+    targetDate: "2026-11-26",
+    title: "Nomination rules compliance certificates",
+    type: "IEBC / ORPP",
   },
   {
-    date: "09 Feb 2027",
-    targetDate: "2027-02-09",
-    title: "Public officer resignation deadline",
-    type: "Legal / IEBC",
+    date: "10 Dec 2026",
+    targetDate: "2026-12-10",
+    title: "Election fundraising deadline",
+    type: "IEBC / EACC / Parliament",
   },
   {
-    date: "08 May 2027",
-    targetDate: "2027-05-08",
-    title: "Party primaries and internal disputes deadline",
-    type: "Party",
+    date: "10 Feb 2027",
+    targetDate: "2027-02-10",
+    title: "Voter register audit / civil servant deadline",
+    type: "IEBC / PSC",
   },
   {
-    date: "02 Jun 2027",
-    targetDate: "2027-06-02",
-    title: "MCA nomination period begins",
+    date: "12 Apr 2027",
+    targetDate: "2027-04-12",
+    title: "Election technology procurement deadline",
+    type: "IEBC / CAK / ICT Authority",
+  },
+  {
+    date: "21 Apr 2027",
+    targetDate: "2027-04-21",
+    title: "Party primary candidates and dates submission",
+    type: "Political Party / IEBC",
+  },
+  {
+    date: "28 Apr 2027",
+    targetDate: "2027-04-28",
+    title: "Outer limit for party primary submissions",
+    type: "Political Party / IEBC",
+  },
+  {
+    date: "10 May 2027",
+    targetDate: "2027-05-10",
+    title: "Political party resignation deadline",
+    type: "Political Party / ORPP",
+  },
+  {
+    date: "12 May 2027",
+    targetDate: "2027-05-12",
+    title: "Voter register inspection opens",
     type: "IEBC",
+  },
+  {
+    date: "11 Jun 2027",
+    targetDate: "2027-06-11",
+    title: "Voter register inspection closes / technology testing deadline",
+    type: "IEBC / ICT",
+  },
+  {
+    date: "26 Jun 2027",
+    targetDate: "2027-06-26",
+    title: "Independent candidate nomination milestone",
+    type: "IEBC / Independent Candidates",
+  },
+  {
+    date: "27 Jul 2027",
+    targetDate: "2027-07-27",
+    title: "National and county chief agents deadline",
+    type: "Political Parties / Candidates / IEBC",
   },
   {
     date: "10 Aug 2027",
     targetDate: "2027-08-10",
     title: "General Election",
-    type: "Election",
+    type: "IEBC / Political Parties / Candidates",
+  },
+  {
+    date: "17 Aug 2027",
+    targetDate: "2027-08-17",
+    title: "Presidential results declaration deadline",
+    type: "IEBC",
+  },
+  {
+    date: "24 Aug 2027",
+    targetDate: "2027-08-24",
+    title: "Presidential election petition deadline",
+    type: "Supreme Court / IEBC",
+  },
+  {
+    date: "07 Sep 2027",
+    targetDate: "2027-09-07",
+    title: "Election case determination deadline",
+    type: "Judiciary",
+  },
+  {
+    date: "09 Sep 2027",
+    targetDate: "2027-09-09",
+    title: "Presidential runoff / special-seat allocation milestone",
+    type: "IEBC / Political Parties",
+  },
+  {
+    date: "09 Mar 2028",
+    targetDate: "2028-03-09",
+    title: "Other election petition timeline",
+    type: "IEBC / Judiciary",
   },
 ];
 
@@ -363,8 +517,8 @@ const Dashboard = () => {
             </StatValue>
 
             <StatDescription>
-              {supporterDifference >= 0 ? "+" : ""}
-              {supporterDifference.toLocaleString()} against previous
+              <small style={{color:"red"}}> <b>{supporterDifference >= 0 ? "+" : ""}
+              {supporterDifference.toLocaleString()}</b> </small> against previous
               voter baseline
             </StatDescription>
           </StatCard>
@@ -461,12 +615,11 @@ const Dashboard = () => {
             <SectionHeader>
               <div>
                 <SectionTitle>
-                  Community Engagement
+                  Strategic and Analytical Community Engagement
                 </SectionTitle>
 
                 <SectionDescription>
-                  Record where discussions happened and the main
-                  concerns raised.
+                  Ganjoni/Shimanzi ward campaign territory analysis.
                 </SectionDescription>
               </div>
 
@@ -511,7 +664,7 @@ const Dashboard = () => {
             <SectionHeader>
               <div>
                 <SectionTitle>
-                  Activities & Events
+                 Campaign Activities & Events
                 </SectionTitle>
 
                 <SectionDescription>
@@ -558,7 +711,7 @@ const Dashboard = () => {
                 <SectionTitle>Manifesto</SectionTitle>
 
                 <SectionDescription>
-                  Track commitments and their implementation.
+                  Issue categories and the development targets attached to each.
                 </SectionDescription>
               </div>
 
@@ -573,7 +726,7 @@ const Dashboard = () => {
                   </ManifestoNumber>
 
                   <ManifestoLabel>
-                    Commitments
+                    Targets
                   </ManifestoLabel>
                 </ManifestoStat>
 
@@ -599,14 +752,18 @@ const Dashboard = () => {
               </ManifestoSummary>
 
               {manifesto.map((item) => (
-                <ManifestoRow key={item.title}>
+                <ManifestoRow key={item.issueCategory}>
                   <ManifestoMain>
+                    <ManifestoCategory>
+                      {item.issueCategory}
+                    </ManifestoCategory>
+
                     <ManifestoTitle>
-                      {item.title}
+                      {item.target}
                     </ManifestoTitle>
 
                     <ManifestoArea>
-                      {item.area}
+                      Target area: {item.area}
                     </ManifestoArea>
                   </ManifestoMain>
 
@@ -649,13 +806,13 @@ const Dashboard = () => {
                 </SectionTitle>
 
                 <SectionDescription>
-                  Important upcoming election dates.
+                  Election milestones, deadlines and responsible parties.
                 </SectionDescription>
               </div>
             </SectionHeader>
 
             <Card>
-              {electionDates.slice(0, 4).map((item) => (
+              {electionDates.map((item) => (
                 <CalendarItem key={item.targetDate}>
                   <CalendarTop>
                     <CalendarDate>
@@ -1288,9 +1445,19 @@ const ManifestoMain = styled.div`
   min-width: 0;
 `;
 
+const ManifestoCategory = styled.div`
+  margin-bottom: 4px;
+  color: #667085;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+`;
+
 const ManifestoTitle = styled.div`
   font-size: 13px;
   font-weight: 650;
+  line-height: 1.45;
 `;
 
 const ManifestoArea = styled.div`
