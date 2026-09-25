@@ -334,7 +334,7 @@ const Dashboard = () => {
 
               <Tags>
                 <Tag>2027 Election</Tag>
-                <Tag>Ward Accountability</Tag>
+                {/* <Tag>Ward Accountability</Tag> */}
               </Tags>
             </div>
           </ProfileLeft>
