@@ -1360,39 +1360,39 @@ const ManifestoStatus = styled.span<{
 /* Supporter Snapshot */
 /* -------------------------------------------------------------------------- */
 
-const SupporterBlock = styled.div`
-  padding: 17px;
-  border-bottom: 1px solid #f2f4f7;
-`;
+// const SupporterBlock = styled.div`
+//   padding: 17px;
+//   border-bottom: 1px solid #f2f4f7;
+// `;
 
-const SupporterLabel = styled.div`
-  color: #667085;
-  font-size: 11px;
-  font-weight: 600;
-`;
+// const SupporterLabel = styled.div`
+//   color: #667085;
+//   font-size: 11px;
+//   font-weight: 600;
+// `;
 
-const SupporterValue = styled.div`
-  margin-top: 5px;
-  font-size: 24px;
-  font-weight: 750;
-`;
+// const SupporterValue = styled.div`
+//   margin-top: 5px;
+//   font-size: 24px;
+//   font-weight: 750;
+// `;
 
-const DifferenceBlock = styled.div`
-  padding: 17px;
-  background: #f9fafb;
-`;
+// const DifferenceBlock = styled.div`
+//   padding: 17px;
+//   background: #f9fafb;
+// `;
 
-const DifferenceLabel = styled.div`
-  color: #667085;
-  font-size: 11px;
-  font-weight: 600;
-`;
+// const DifferenceLabel = styled.div`
+//   color: #667085;
+//   font-size: 11px;
+//   font-weight: 600;
+// `;
 
-const DifferenceValue = styled.div`
-  margin-top: 4px;
-  font-size: 18px;
-  font-weight: 750;
-`;
+// const DifferenceValue = styled.div`
+//   margin-top: 4px;
+//   font-size: 18px;
+//   font-weight: 750;
+// `;
 
 /* -------------------------------------------------------------------------- */
 /* Election Calendar */
