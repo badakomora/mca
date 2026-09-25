@@ -622,8 +622,9 @@ const Dashboard = () => {
 
         <ProfileCard>
           <ProfileLeft>
-            <Avatar><img src="./logo.jpeg" style={{ width: "100%", height: "100%" }} alt="" /></Avatar>
-
+          <Avatar>
+  <img src="/logo.jpeg" alt="Hon Huka" />
+</Avatar>
             <div>
               <ProfileName>
                 Hon Huka / MCA Office
@@ -1278,17 +1279,32 @@ const ProfileLeft = styled.div`
 `;
 
 const Avatar = styled.div`
-  width: 54px;
-  height: 54px;
+  width: 150px;
+  height: 150px;
+  min-width: 150px;
   border-radius: 12px;
   background: #eef2f6;
 
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  font-size: 15px;
-  font-weight: 800;
-  color: #344054;
+  overflow: hidden;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  @media (max-width: 700px) {
+    width: 110px;
+    height: 110px;
+    min-width: 110px;
+  }
 `;
 
 const ProfileName = styled.div`
