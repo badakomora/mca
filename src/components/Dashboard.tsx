@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "@emotion/styled";
 
+/* -------------------------------------------------------------------------- */
+/* Types */
+/* -------------------------------------------------------------------------- */
+
 type IssueStatus = "Raised" | "In Progress" | "Resolved";
 
 type Issue = {
@@ -11,12 +15,19 @@ type Issue = {
   lastUpdate: string;
 };
 
+type EngagementStatus =
+  | "Not Engaged"
+  | "Engaged"
+  | "Follow-up"
+  | "Completed";
+
 type Engagement = {
+  pollingStation: string;
+  registeredVoters: number;
+  streams: number;
   area: string;
-  date: string;
-  discussion: string;
   biggestProblem: string;
-  status: "Open" | "Follow-up" | "Completed";
+  status: EngagementStatus;
 };
 
 type Activity = {
@@ -86,27 +97,119 @@ const issues: Issue[] = [
   },
 ];
 
+/*
+ * Polling-station structure from the supplied election-register image.
+ *
+ * Total:
+ * 13 polling stations
+ * 18,556 registered voters
+ * 34 streams
+ */
 const engagements: Engagement[] = [
   {
-    area: "Sacred Heart Primary School",
-    date: "3672 Voters",
-    discussion: "Ganjoni",
-    biggestProblem: "Garbage Management and Sanitation",
-    status: "Open",
+    pollingStation: "Sacred Heart Primary School",
+    registeredVoters: 3672,
+    streams: 6,
+    area: "Ganjoni",
+    biggestProblem: "Garbage management and sanitation",
+    status: "Not Engaged",
   },
   {
-    area: "Makupa Primary School",
-    date: "3672 Voters",
-    discussion: "Majengo",
+    pollingStation: "Makupa Primary School",
+    registeredVoters: 2704,
+    streams: 4,
+    area: "Makupa",
     biggestProblem: "Poor drainage during heavy rain",
-    status: "Open",
+    status: "Not Engaged",
   },
   {
-    area: "Makande KPA Nursery School",
-    date: "1854 Voters",
-    discussion: "Shimanzi",
-    biggestProblem: "Poor drainage during heavy rain and Limited employment opportunities",
+    pollingStation: "Makande KPA Nursery School",
+    registeredVoters: 1854,
+    streams: 3,
+    area: "Makande",
+    biggestProblem:
+      "Poor drainage and limited employment opportunities",
+    status: "Not Engaged",
+  },
+  {
+    pollingStation: "KPA Hall High Level",
+    registeredVoters: 1767,
+    streams: 3,
+    area: "High Level",
+    biggestProblem: "Garbage management and sanitation",
     status: "Follow-up",
+  },
+  {
+    pollingStation: "Makande Primary School",
+    registeredVoters: 1702,
+    streams: 3,
+    area: "Makande",
+    biggestProblem: "Youth employment and public services",
+    status: "Not Engaged",
+  },
+  {
+    pollingStation: "Little Theatre Club",
+    registeredVoters: 1581,
+    streams: 3,
+    area: "Ganjoni",
+    biggestProblem: "Security and public-space management",
+    status: "Not Engaged",
+  },
+  {
+    pollingStation: "Ganjoni Municipal Clinic",
+    registeredVoters: 1169,
+    streams: 2,
+    area: "Ganjoni",
+    biggestProblem: "Healthcare access and sanitation",
+    status: "Not Engaged",
+  },
+  {
+    pollingStation: "Majengo Primary School",
+    registeredVoters: 1066,
+    streams: 2,
+    area: "Majengo",
+    biggestProblem: "Drainage and waste management",
+    status: "Not Engaged",
+  },
+  {
+    pollingStation: "Shimanzi KPA Nursery School",
+    registeredVoters: 906,
+    streams: 2,
+    area: "Shimanzi",
+    biggestProblem: "Housing, drainage and basic services",
+    status: "Not Engaged",
+  },
+  {
+    pollingStation: "King'orani Prison (Jela Baridi)",
+    registeredVoters: 804,
+    streams: 2,
+    area: "King'orani",
+    biggestProblem: "Security and surrounding infrastructure",
+    status: "Not Engaged",
+  },
+  {
+    pollingStation: "Bandari College",
+    registeredVoters: 718,
+    streams: 2,
+    area: "Shimanzi",
+    biggestProblem: "Youth opportunities and skills development",
+    status: "Not Engaged",
+  },
+  {
+    pollingStation: "KPA Social Hall",
+    registeredVoters: 405,
+    streams: 1,
+    area: "Shimanzi",
+    biggestProblem: "Community facilities and sanitation",
+    status: "Not Engaged",
+  },
+  {
+    pollingStation: "Public Works Offices",
+    registeredVoters: 208,
+    streams: 1,
+    area: "Shimanzi",
+    biggestProblem: "Public infrastructure and services",
+    status: "Not Engaged",
   },
 ];
 
@@ -144,14 +247,16 @@ const activities: Activity[] = [
 const manifesto: ManifestoItem[] = [
   {
     issueCategory: "Youth & Employment",
-    target: "Increase youth access to employment and economic opportunities",
+    target:
+      "Increase youth access to employment and economic opportunities",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
   },
   {
     issueCategory: "Education",
-    target: "Improve access to educational and skills-development opportunities",
+    target:
+      "Improve access to educational and skills-development opportunities",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
@@ -165,84 +270,96 @@ const manifesto: ManifestoItem[] = [
   },
   {
     issueCategory: "Water & Sanitation",
-    target: "Improve access to clean water, drainage and sanitation",
+    target:
+      "Improve access to clean water, drainage and sanitation",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
   },
   {
     issueCategory: "Roads & Infrastructure",
-    target: "Improve roads, drainage, lighting and public facilities",
+    target:
+      "Improve roads, drainage, lighting and public facilities",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
   },
   {
     issueCategory: "Business & Livelihoods",
-    target: "Support local businesses, traders and income-generating activities",
+    target:
+      "Support local businesses, traders and income-generating activities",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
   },
   {
     issueCategory: "Environment & Cleanliness",
-    target: "Improve waste management, cleanliness and environmental protection",
+    target:
+      "Improve waste management, cleanliness and environmental protection",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
   },
   {
     issueCategory: "Security",
-    target: "Strengthen community safety and coordination on security concerns",
+    target:
+      "Strengthen community safety and coordination on security concerns",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
   },
   {
     issueCategory: "Housing & Settlements",
-    target: "Advocate for improved basic services and living conditions",
+    target:
+      "Advocate for improved basic services and living conditions",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
   },
   {
     issueCategory: "Women Empowerment",
-    target: "Expand women's access to skills, entrepreneurship and economic opportunities",
+    target:
+      "Expand women's access to skills, entrepreneurship and economic opportunities",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
   },
   {
     issueCategory: "Persons with Disabilities",
-    target: "Promote inclusion, accessibility and participation in ward programs",
+    target:
+      "Promote inclusion, accessibility and participation in ward programs",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
   },
   {
     issueCategory: "Sports & Talent",
-    target: "Support sports, talent development and youth recreation",
+    target:
+      "Support sports, talent development and youth recreation",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
   },
   {
     issueCategory: "Community Participation",
-    target: "Strengthen resident participation in ward planning and development",
+    target:
+      "Strengthen resident participation in ward planning and development",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
   },
   {
     issueCategory: "Accountability & Transparency",
-    target: "Track ward projects, implementation and community feedback",
+    target:
+      "Track ward projects, implementation and community feedback",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
   },
   {
     issueCategory: "Digital Access",
-    target: "Expand digital literacy, technology access and digital opportunities",
+    target:
+      "Expand digital literacy, technology access and digital opportunities",
     area: "Ward-wide",
     progress: 0,
     status: "Planned",
@@ -307,7 +424,8 @@ const electionDates: ElectionDate[] = [
   {
     date: "11 Jun 2027",
     targetDate: "2027-06-11",
-    title: "Voter register inspection closes / technology testing deadline",
+    title:
+      "Voter register inspection closes / technology testing deadline",
     type: "IEBC / ICT",
   },
   {
@@ -349,7 +467,8 @@ const electionDates: ElectionDate[] = [
   {
     date: "09 Sep 2027",
     targetDate: "2027-09-09",
-    title: "Presidential runoff / special-seat allocation milestone",
+    title:
+      "Presidential runoff / special-seat allocation milestone",
     type: "IEBC / Political Parties",
   },
   {
@@ -407,6 +526,10 @@ const getDaysRemaining = (targetDate: string) => {
   return `${days} days`;
 };
 
+/* -------------------------------------------------------------------------- */
+/* Calculations */
+/* -------------------------------------------------------------------------- */
+
 const issueRaised = issues.length;
 
 const issueInProgress = issues.filter(
@@ -436,6 +559,28 @@ const manifestoInProgress = manifesto.filter(
 const supporterDifference =
   currentSupporters - previousVoterBaseline;
 
+const totalRegisteredVoters = engagements.reduce(
+  (total, engagement) =>
+    total + engagement.registeredVoters,
+  0,
+);
+
+const totalStreams = engagements.reduce(
+  (total, engagement) => total + engagement.streams,
+  0,
+);
+
+const engagedStations = engagements.filter(
+  (engagement) =>
+    engagement.status === "Engaged" ||
+    engagement.status === "Follow-up" ||
+    engagement.status === "Completed",
+).length;
+
+const completedEngagements = engagements.filter(
+  (engagement) => engagement.status === "Completed",
+).length;
+
 /* -------------------------------------------------------------------------- */
 /* Component */
 /* -------------------------------------------------------------------------- */
@@ -450,7 +595,9 @@ const Dashboard = () => {
 
         <Header>
           <div>
-            <Eyebrow>Shimanzi/Ganjoni WARD ACCOUNTABILITY</Eyebrow>
+            <Eyebrow>
+              SHIMANZI/GANJONI WARD ACCOUNTABILITY
+            </Eyebrow>
 
             <Title>MCA Dashboard</Title>
 
@@ -475,7 +622,7 @@ const Dashboard = () => {
 
         <ProfileCard>
           <ProfileLeft>
-            <Avatar>MC</Avatar>
+            <Avatar><img src="./logo.jpeg" style={{ width: "100%", height: "100%" }} alt="" /></Avatar>
 
             <div>
               <ProfileName>
@@ -488,7 +635,6 @@ const Dashboard = () => {
 
               <Tags>
                 <Tag>2027 Election</Tag>
-                {/* <Tag>Ward Accountability</Tag> */}
               </Tags>
             </div>
           </ProfileLeft>
@@ -517,9 +663,13 @@ const Dashboard = () => {
             </StatValue>
 
             <StatDescription>
-              <small style={{color:"red"}}> <b>{supporterDifference >= 0 ? "+" : ""}
-              {supporterDifference.toLocaleString()}</b> </small> against previous
-              voter baseline
+              <DifferenceNumber
+                positive={supporterDifference >= 0}
+              >
+                {supporterDifference >= 0 ? "+" : ""}
+                {supporterDifference.toLocaleString()}
+              </DifferenceNumber>{" "}
+              against previous voter baseline
             </StatDescription>
           </StatCard>
 
@@ -543,7 +693,8 @@ const Dashboard = () => {
             </StatValue>
 
             <StatDescription>
-              {issueResolved} resolved · {issueInProgress} in progress
+              {issueResolved} resolved · {issueInProgress} in
+              progress
             </StatDescription>
           </StatCard>
 
@@ -566,156 +717,26 @@ const Dashboard = () => {
 
         <MainGrid>
           <MainColumn>
-            {/* ============================================================ */}
-            {/* Community Issues */}
-            {/* ============================================================ */}
 
-            <SectionHeader>
-              <div>
-                <SectionTitle>Community Issues</SectionTitle>
-
-                <SectionDescription>
-                  Track issues from being raised through resolution.
-                </SectionDescription>
-              </div>
-
-              <TextButton>View all</TextButton>
-            </SectionHeader>
-
-            <Card>
-              <IssueHeader>
-                <span>Issue</span>
-                <span>Area</span>
-                <span>Status</span>
-              </IssueHeader>
-
-              {issues.map((issue) => (
-                <IssueRow key={issue.title}>
-                  <IssueMain>
-                    <IssueTitle>{issue.title}</IssueTitle>
-
-                    <IssueCategory>
-                      {issue.category} · Updated {issue.lastUpdate}
-                    </IssueCategory>
-                  </IssueMain>
-
-                  <IssueArea>{issue.area}</IssueArea>
-
-                  <StatusBadge status={issue.status}>
-                    {issue.status}
-                  </StatusBadge>
-                </IssueRow>
-              ))}
-            </Card>
-
-            {/* ============================================================ */}
-            {/* Community Engagement */}
-            {/* ============================================================ */}
-
-            <SectionHeader>
-              <div>
-                <SectionTitle>
-                  Strategic and Analytical Community Engagement
-                </SectionTitle>
-
-                <SectionDescription>
-                  Ganjoni/Shimanzi ward campaign territory analysis.
-                </SectionDescription>
-              </div>
-
-              <TextButton>View all</TextButton>
-            </SectionHeader>
-
-            <Card>
-              {engagements.map((engagement) => (
-                <EngagementRow
-                  key={`${engagement.area}-${engagement.date}`}
-                >
-                  <EngagementDate>
-                    {engagement.date}
-                  </EngagementDate>
-
-                  <EngagementMain>
-                    <EngagementArea>
-                      {engagement.area}
-                    </EngagementArea>
-
-                    <EngagementDiscussion>
-                      {engagement.discussion}
-                    </EngagementDiscussion>
-
-                    <EngagementProblem>
-                      Biggest problem:{" "}
-                      {engagement.biggestProblem}
-                    </EngagementProblem>
-                  </EngagementMain>
-
-                  <SimpleStatus>
-                    {engagement.status}
-                  </SimpleStatus>
-                </EngagementRow>
-              ))}
-            </Card>
-
-            {/* ============================================================ */}
-            {/* Activities & Events */}
-            {/* ============================================================ */}
-
-            <SectionHeader>
-              <div>
-                <SectionTitle>
-                 Campaign Activities & Events
-                </SectionTitle>
-
-                <SectionDescription>
-                  Meetings, barazas, consultations and community
-                  visits.
-                </SectionDescription>
-              </div>
-
-              <TextButton>Manage</TextButton>
-            </SectionHeader>
-
-            <Card>
-              {activities.map((activity) => (
-                <ActivityRow
-                  key={`${activity.title}-${activity.date}`}
-                >
-                  <ActivityDate>
-                    {activity.date}
-                  </ActivityDate>
-
-                  <ActivityMain>
-                    <ActivityTitle>
-                      {activity.title}
-                    </ActivityTitle>
-
-                    <ActivityMeta>
-                      {activity.type} · {activity.location}
-                    </ActivityMeta>
-                  </ActivityMain>
-
-                  <ActivityStatus status={activity.status}>
-                    {activity.status}
-                  </ActivityStatus>
-                </ActivityRow>
-              ))}
-            </Card>
-
-            {/* ============================================================ */}
+             {/* ============================================================ */}
             {/* Manifesto */}
             {/* ============================================================ */}
 
             <SectionHeader>
               <div>
-                <SectionTitle>Manifesto</SectionTitle>
+                <SectionTitle>
+                  Manifesto
+                </SectionTitle>
 
                 <SectionDescription>
-                  Issue categories and the development targets attached to each.
+                  Issue categories and the development
+                  targets attached to each.
                 </SectionDescription>
               </div>
 
-              <TextButton>View manifesto</TextButton>
+              <TextButton>
+                View manifesto
+              </TextButton>
             </SectionHeader>
 
             <Card>
@@ -752,7 +773,9 @@ const Dashboard = () => {
               </ManifestoSummary>
 
               {manifesto.map((item) => (
-                <ManifestoRow key={item.issueCategory}>
+                <ManifestoRow
+                  key={item.issueCategory}
+                >
                   <ManifestoMain>
                     <ManifestoCategory>
                       {item.issueCategory}
@@ -779,12 +802,242 @@ const Dashboard = () => {
                     </ProgressText>
                   </ProgressContainer>
 
-                  <ManifestoStatus status={item.status}>
+                  <ManifestoStatus
+                    status={item.status}
+                  >
                     {item.status}
                   </ManifestoStatus>
                 </ManifestoRow>
               ))}
             </Card>
+
+
+
+            {/* ============================================================ */}
+            {/* Community Issues */}
+            {/* ============================================================ */}
+
+            <SectionHeader>
+              <div>
+                <SectionTitle>
+                  Community Issues
+                </SectionTitle>
+
+                <SectionDescription>
+                  Track issues from being raised through
+                  resolution.
+                </SectionDescription>
+              </div>
+
+              <TextButton>View all</TextButton>
+            </SectionHeader>
+
+            <Card>
+              <IssueHeader>
+                <span>Issue</span>
+                <span>Area</span>
+                <span>Status</span>
+              </IssueHeader>
+
+              {issues.map((issue) => (
+                <IssueRow key={issue.title}>
+                  <IssueMain>
+                    <IssueTitle>
+                      {issue.title}
+                    </IssueTitle>
+
+                    <IssueCategory>
+                      {issue.category} · Updated{" "}
+                      {issue.lastUpdate}
+                    </IssueCategory>
+                  </IssueMain>
+
+                  <IssueArea>
+                    {issue.area}
+                  </IssueArea>
+
+                  <StatusBadge status={issue.status}>
+                    {issue.status}
+                  </StatusBadge>
+                </IssueRow>
+              ))}
+            </Card>
+
+            {/* ============================================================ */}
+            {/* Strategic and Analytical Community Engagement */}
+            {/* ============================================================ */}
+
+            <SectionHeader>
+              <div>
+                <SectionTitle>
+                  Strategic and Analytical Community
+                  Engagement
+                </SectionTitle>
+
+                <SectionDescription>
+                  Track polling stations by registered voters,
+                  streams, local issues and engagement status.
+                </SectionDescription>
+              </div>
+
+              <TextButton>View all</TextButton>
+            </SectionHeader>
+
+            <Card>
+              {/* Engagement summary */}
+
+              <EngagementSummary>
+                <EngagementSummaryItem>
+                  <EngagementSummaryNumber>
+                    {engagements.length}
+                  </EngagementSummaryNumber>
+
+                  <EngagementSummaryLabel>
+                    Polling stations
+                  </EngagementSummaryLabel>
+                </EngagementSummaryItem>
+
+                <EngagementSummaryItem>
+                  <EngagementSummaryNumber>
+                    {totalRegisteredVoters.toLocaleString()}
+                  </EngagementSummaryNumber>
+
+                  <EngagementSummaryLabel>
+                    Registered voters
+                  </EngagementSummaryLabel>
+                </EngagementSummaryItem>
+
+                <EngagementSummaryItem>
+                  <EngagementSummaryNumber>
+                    {totalStreams}
+                  </EngagementSummaryNumber>
+
+                  <EngagementSummaryLabel>
+                    Streams
+                  </EngagementSummaryLabel>
+                </EngagementSummaryItem>
+
+                <EngagementSummaryItem>
+                  <EngagementSummaryNumber>
+                    {engagedStations}
+                  </EngagementSummaryNumber>
+
+                  <EngagementSummaryLabel>
+                    Engaged
+                  </EngagementSummaryLabel>
+                </EngagementSummaryItem>
+              </EngagementSummary>
+
+              {/* Table heading */}
+
+              <EngagementHeader>
+                <span>Polling Station</span>
+                <span>Voters</span>
+                <span>Streams</span>
+                <span>Engagement</span>
+              </EngagementHeader>
+
+              {engagements.map((engagement) => (
+                <EngagementRow
+                  key={engagement.pollingStation}
+                >
+                  <EngagementMain>
+                    <EngagementArea>
+                      {engagement.pollingStation}
+                    </EngagementArea>
+
+                    <EngagementLocation>
+                      {engagement.area}
+                    </EngagementLocation>
+
+                    <EngagementProblem>
+                      Biggest problem:{" "}
+                      {engagement.biggestProblem}
+                    </EngagementProblem>
+                  </EngagementMain>
+
+                  <EngagementVoters>
+                    {engagement.registeredVoters.toLocaleString()}
+                  </EngagementVoters>
+
+                  <EngagementStreams>
+                    {engagement.streams}
+                  </EngagementStreams>
+
+                  <SimpleStatus
+                    status={engagement.status}
+                  >
+                    {engagement.status}
+                  </SimpleStatus>
+                </EngagementRow>
+              ))}
+
+              <EngagementFooter>
+                <span>
+                  Total
+                </span>
+
+                <strong>
+                  {totalRegisteredVoters.toLocaleString()}
+                </strong>
+
+                <strong>{totalStreams}</strong>
+
+                <span>
+                  {completedEngagements} completed
+                </span>
+              </EngagementFooter>
+            </Card>
+
+            {/* ============================================================ */}
+            {/* Activities & Events */}
+            {/* ============================================================ */}
+
+            <SectionHeader>
+              <div>
+                <SectionTitle>
+                  Campaign Activities & Events
+                </SectionTitle>
+
+                <SectionDescription>
+                  Meetings, barazas, consultations and community
+                  visits.
+                </SectionDescription>
+              </div>
+
+              <TextButton>Manage</TextButton>
+            </SectionHeader>
+
+            <Card>
+              {activities.map((activity) => (
+                <ActivityRow
+                  key={`${activity.title}-${activity.date}`}
+                >
+                  <ActivityDate>
+                    {activity.date}
+                  </ActivityDate>
+
+                  <ActivityMain>
+                    <ActivityTitle>
+                      {activity.title}
+                    </ActivityTitle>
+
+                    <ActivityMeta>
+                      {activity.type} ·{" "}
+                      {activity.location}
+                    </ActivityMeta>
+                  </ActivityMain>
+
+                  <ActivityStatus
+                    status={activity.status}
+                  >
+                    {activity.status}
+                  </ActivityStatus>
+                </ActivityRow>
+              ))}
+            </Card>
+
+           
           </MainColumn>
 
           {/* ---------------------------------------------------------------- */}
@@ -792,8 +1045,46 @@ const Dashboard = () => {
           {/* ---------------------------------------------------------------- */}
 
           <SideColumn>
-          
-           
+
+             {/* ============================================================ */}
+            {/* Recent Activity */}
+            {/* ============================================================ */}
+
+
+            <SectionHeader>
+              <div>
+                <SectionTitle>
+                  Recent Activity
+                </SectionTitle>
+
+                <SectionDescription>
+                  Latest changes across the dashboard.
+                </SectionDescription>
+              </div>
+            </SectionHeader>
+
+            <Card>
+              {recentActivity.map((activity) => (
+                <RecentRow
+                  key={`${activity.date}-${activity.text}`}
+                >
+                  <RecentDot />
+
+                  <RecentMain>
+                    <RecentText>
+                      {activity.text}
+                    </RecentText>
+
+                    <RecentMeta>
+                      {activity.type} ·{" "}
+                      {activity.date}
+                    </RecentMeta>
+                  </RecentMain>
+                </RecentRow>
+              ))}
+            </Card>
+
+
 
             {/* ============================================================ */}
             {/* Election Calendar */}
@@ -806,7 +1097,8 @@ const Dashboard = () => {
                 </SectionTitle>
 
                 <SectionDescription>
-                  Election milestones, deadlines and responsible parties.
+                  Election milestones, deadlines and
+                  responsible parties.
                 </SectionDescription>
               </div>
             </SectionHeader>
@@ -820,7 +1112,9 @@ const Dashboard = () => {
                     </CalendarDate>
 
                     <CountdownBadge>
-                      {getDaysRemaining(item.targetDate)}
+                      {getDaysRemaining(
+                        item.targetDate,
+                      )}
                     </CountdownBadge>
                   </CalendarTop>
 
@@ -839,41 +1133,8 @@ const Dashboard = () => {
               </CalendarFooter>
             </Card>
 
-            {/* ============================================================ */}
-            {/* Recent Activity */}
-            {/* ============================================================ */}
-
-            <SectionHeader>
-              <div>
-                <SectionTitle>
-                  Recent Activity
-                </SectionTitle>
-
-                <SectionDescription>
-                  Latest changes across the dashboard.
-                </SectionDescription>
-              </div>
-            </SectionHeader>
-
-            <Card>
-              {recentActivity.map((activity, index) => (
-                <RecentRow
-                  key={`${activity.date}-${activity.text}`}
-                >
-                  <RecentDot />
-
-                  <RecentMain>
-                    <RecentText>
-                      {activity.text}
-                    </RecentText>
-
-                    <RecentMeta>
-                      {activity.type} · {activity.date}
-                    </RecentMeta>
-                  </RecentMain>
-                </RecentRow>
-              ))}
-            </Card>
+           
+            
           </SideColumn>
         </MainGrid>
       </Container>
@@ -882,7 +1143,7 @@ const Dashboard = () => {
 };
 
 /* -------------------------------------------------------------------------- */
-/* Styles */
+/* General Styles */
 /* -------------------------------------------------------------------------- */
 
 const Page = styled.div`
@@ -958,16 +1219,24 @@ const HeaderActions = styled.div`
   }
 `;
 
-const Button = styled.button<{ variant?: "secondary" }>`
+const Button = styled.button<{
+  variant?: "secondary";
+}>`
   border: 1px solid
     ${({ variant }) =>
-      variant === "secondary" ? "#d0d5dd" : "#17202a"};
+      variant === "secondary"
+        ? "#d0d5dd"
+        : "#17202a"};
 
   background: ${({ variant }) =>
-    variant === "secondary" ? "#ffffff" : "#17202a"};
+    variant === "secondary"
+      ? "#ffffff"
+      : "#17202a"};
 
   color: ${({ variant }) =>
-    variant === "secondary" ? "#344054" : "#ffffff"};
+    variant === "secondary"
+      ? "#344054"
+      : "#ffffff"};
 
   border-radius: 8px;
   padding: 10px 15px;
@@ -979,6 +1248,10 @@ const Button = styled.button<{ variant?: "secondary" }>`
     opacity: 0.88;
   }
 `;
+
+/* -------------------------------------------------------------------------- */
+/* Profile */
+/* -------------------------------------------------------------------------- */
 
 const ProfileCard = styled.div`
   display: flex;
@@ -1077,6 +1350,10 @@ const CountdownBadge = styled.span`
   font-weight: 700;
 `;
 
+/* -------------------------------------------------------------------------- */
+/* Stats */
+/* -------------------------------------------------------------------------- */
+
 const StatsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1117,9 +1394,23 @@ const StatDescription = styled.div`
   line-height: 1.4;
 `;
 
+const DifferenceNumber = styled.span<{
+  positive: boolean;
+}>`
+  color: ${({ positive }) =>
+    positive ? "#027a48" : "#b42318"};
+  font-weight: 700;
+`;
+
+/* -------------------------------------------------------------------------- */
+/* Main Layout */
+/* -------------------------------------------------------------------------- */
+
 const MainGrid = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1.7fr) minmax(320px, 1fr);
+  grid-template-columns:
+    minmax(0, 1.7fr)
+    minmax(320px, 1fr);
   gap: 24px;
 
   @media (max-width: 900px) {
@@ -1179,7 +1470,10 @@ const Card = styled.div`
 
 const IssueHeader = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 100px 110px;
+  grid-template-columns:
+    minmax(0, 1fr)
+    100px
+    110px;
   gap: 15px;
   padding: 11px 17px;
 
@@ -1202,7 +1496,10 @@ const IssueHeader = styled.div`
 
 const IssueRow = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 100px 110px;
+  grid-template-columns:
+    minmax(0, 1fr)
+    100px
+    110px;
   align-items: center;
   gap: 15px;
 
@@ -1268,14 +1565,90 @@ const StatusBadge = styled.span<{
 `;
 
 /* -------------------------------------------------------------------------- */
-/* Engagement */
+/* Strategic & Analytical Community Engagement */
 /* -------------------------------------------------------------------------- */
+
+const EngagementSummary = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid #eaecf0;
+
+  @media (max-width: 650px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
+
+const EngagementSummaryItem = styled.div`
+  padding: 14px 10px;
+  text-align: center;
+  border-right: 1px solid #eaecf0;
+
+  &:nth-child(4) {
+    border-right: 0;
+  }
+
+  @media (max-width: 650px) {
+    &:nth-child(2) {
+      border-right: 0;
+    }
+
+    &:nth-child(-n + 2) {
+      border-bottom: 1px solid #eaecf0;
+    }
+  }
+`;
+
+const EngagementSummaryNumber = styled.div`
+  font-size: 18px;
+  font-weight: 750;
+`;
+
+const EngagementSummaryLabel = styled.div`
+  margin-top: 3px;
+  color: #98a2b3;
+  font-size: 9px;
+  font-weight: 600;
+`;
+
+const EngagementHeader = styled.div`
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    90px
+    65px
+    100px;
+  gap: 15px;
+  padding: 11px 17px;
+
+  background: #f9fafb;
+  border-bottom: 1px solid #eaecf0;
+
+  color: #667085;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  @media (max-width: 650px) {
+    grid-template-columns:
+      minmax(0, 1fr)
+      70px
+      auto;
+
+    span:nth-child(3) {
+      display: none;
+    }
+  }
+`;
 
 const EngagementRow = styled.div`
   display: grid;
-  grid-template-columns: 90px minmax(0, 1fr) auto;
+  grid-template-columns:
+    minmax(0, 1fr)
+    90px
+    65px
+    100px;
   gap: 15px;
-  align-items: flex-start;
+  align-items: center;
 
   padding: 16px 17px;
   border-bottom: 1px solid #f2f4f7;
@@ -1284,15 +1657,16 @@ const EngagementRow = styled.div`
     border-bottom: 0;
   }
 
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr auto;
-  }
-`;
+  @media (max-width: 650px) {
+    grid-template-columns:
+      minmax(0, 1fr)
+      70px
+      auto;
 
-const EngagementDate = styled.div`
-  color: #667085;
-  font-size: 10px;
-  font-weight: 700;
+    > :nth-child(3) {
+      display: none;
+    }
+  }
 `;
 
 const EngagementMain = styled.div`
@@ -1302,27 +1676,95 @@ const EngagementMain = styled.div`
 const EngagementArea = styled.div`
   font-size: 12px;
   font-weight: 700;
+  line-height: 1.4;
 `;
 
-const EngagementDiscussion = styled.div`
+const EngagementLocation = styled.div`
   margin-top: 3px;
-  font-size: 13px;
-  font-weight: 600;
+  color: #667085;
+  font-size: 10px;
 `;
 
 const EngagementProblem = styled.div`
   margin-top: 5px;
-  color: #667085;
-  font-size: 11px;
+  color: #98a2b3;
+  font-size: 10px;
+  line-height: 1.4;
 `;
 
-const SimpleStatus = styled.span`
+const EngagementVoters = styled.div`
+  color: #17202a;
+  font-size: 12px;
+  font-weight: 700;
+`;
+
+const EngagementStreams = styled.div`
+  color: #667085;
+  font-size: 11px;
+  font-weight: 600;
+`;
+
+const SimpleStatus = styled.span<{
+  status: EngagementStatus;
+}>`
+  width: fit-content;
   padding: 5px 8px;
   border-radius: 5px;
-  background: #f2f4f7;
-  color: #475467;
+
+  background: ${({ status }) =>
+    status === "Completed"
+      ? "#ecfdf3"
+      : status === "Follow-up"
+        ? "#fffaeb"
+        : status === "Engaged"
+          ? "#eff8ff"
+          : "#f2f4f7"};
+
+  color: ${({ status }) =>
+    status === "Completed"
+      ? "#027a48"
+      : status === "Follow-up"
+        ? "#b54708"
+        : status === "Engaged"
+          ? "#175cd3"
+          : "#475467"};
+
   font-size: 10px;
   font-weight: 700;
+`;
+
+const EngagementFooter = styled.div`
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    90px
+    65px
+    100px;
+  gap: 15px;
+  align-items: center;
+
+  padding: 13px 17px;
+  background: #f9fafb;
+  border-top: 1px solid #eaecf0;
+
+  color: #475467;
+  font-size: 10px;
+
+  strong {
+    color: #17202a;
+    font-size: 11px;
+  }
+
+  @media (max-width: 650px) {
+    grid-template-columns:
+      minmax(0, 1fr)
+      70px
+      auto;
+
+    > :nth-child(3) {
+      display: none;
+    }
+  }
 `;
 
 /* -------------------------------------------------------------------------- */
@@ -1331,7 +1773,10 @@ const SimpleStatus = styled.span`
 
 const ActivityRow = styled.div`
   display: grid;
-  grid-template-columns: 90px minmax(0, 1fr) auto;
+  grid-template-columns:
+    90px
+    minmax(0, 1fr)
+    auto;
   align-items: center;
   gap: 15px;
 
@@ -1425,7 +1870,10 @@ const ManifestoLabel = styled.div`
 
 const ManifestoRow = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 140px auto;
+  grid-template-columns:
+    minmax(0, 1fr)
+    140px
+    auto;
   align-items: center;
   gap: 18px;
 
@@ -1484,7 +1932,9 @@ const ProgressTrack = styled.div`
   overflow: hidden;
 `;
 
-const ProgressBar = styled.div<{ progress: number }>`
+const ProgressBar = styled.div<{
+  progress: number;
+}>`
   width: ${({ progress }) => `${progress}%`};
   height: 100%;
   background: #344054;
@@ -1522,44 +1972,6 @@ const ManifestoStatus = styled.span<{
   font-size: 10px;
   font-weight: 700;
 `;
-
-/* -------------------------------------------------------------------------- */
-/* Supporter Snapshot */
-/* -------------------------------------------------------------------------- */
-
-// const SupporterBlock = styled.div`
-//   padding: 17px;
-//   border-bottom: 1px solid #f2f4f7;
-// `;
-
-// const SupporterLabel = styled.div`
-//   color: #667085;
-//   font-size: 11px;
-//   font-weight: 600;
-// `;
-
-// const SupporterValue = styled.div`
-//   margin-top: 5px;
-//   font-size: 24px;
-//   font-weight: 750;
-// `;
-
-// const DifferenceBlock = styled.div`
-//   padding: 17px;
-//   background: #f9fafb;
-// `;
-
-// const DifferenceLabel = styled.div`
-//   color: #667085;
-//   font-size: 11px;
-//   font-weight: 600;
-// `;
-
-// const DifferenceValue = styled.div`
-//   margin-top: 4px;
-//   font-size: 18px;
-//   font-weight: 750;
-// `;
 
 /* -------------------------------------------------------------------------- */
 /* Election Calendar */
