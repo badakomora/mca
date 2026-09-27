@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 
 /* -------------------------------------------------------------------------- */
@@ -95,6 +95,9 @@ const issues: Issue[] = [
     status: "Raised",
     lastUpdate: "1 week ago",
   },
+  { title: "Flooding after heavy rain", area: "Makupa and Ganjoni", category: "Infrastructure", status: "Raised", lastUpdate: "2 weeks ago" },
+  { title: "Street lighting gaps", area: "King'orani", category: "Security", status: "In Progress", lastUpdate: "2 weeks ago" },
+  { title: "Access to clean water", area: "Majengo", category: "Water", status: "Resolved", lastUpdate: "3 weeks ago" },
 ];
 
 /*
@@ -242,6 +245,9 @@ const activities: Activity[] = [
     location: "Area A",
     status: "Completed",
   },
+  { title: "Sanitation site visit", type: "Community Visit", date: "20 Sep 2026", location: "Ganjoni", status: "Completed" },
+  { title: "Small business roundtable", type: "Meeting", date: "22 Sep 2026", location: "Makupa Hall", status: "Planned" },
+  { title: "Ward development forum", type: "Baraza", date: "24 Sep 2026", location: "Ward Hall", status: "Planned" },
 ];
 
 const manifesto: ManifestoItem[] = [
@@ -500,6 +506,9 @@ const recentActivity: RecentActivity[] = [
     text: "Community engagement recorded in Area B",
     type: "Engagement",
   },
+  { date: "4 days ago", text: "New sanitation target added", type: "Manifesto" },
+  { date: "5 days ago", text: "Polling station visit planned", type: "Engagement" },
+  { date: "1 week ago", text: "Street lighting issue raised", type: "Issue" },
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -586,6 +595,18 @@ const completedEngagements = engagements.filter(
 /* -------------------------------------------------------------------------- */
 
 const Dashboard = () => {
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
+
+  const toggleSection = (section: string) => {
+    setExpandedSections((current) => ({
+      ...current,
+      [section]: !current[section],
+    }));
+  };
+
+  const visibleRows = <T,>(rows: T[], section: string) =>
+    expandedSections[section] ? rows : rows.slice(0, 7);
+
   return (
     <Page>
       <Container>
@@ -735,8 +756,8 @@ const Dashboard = () => {
                 </SectionDescription>
               </div>
 
-              <TextButton>
-                View manifesto
+<TextButton onClick={() => toggleSection("manifesto")} aria-expanded={!!expandedSections.manifesto}>
+                {expandedSections.manifesto ? "Show less" : "View all"}
               </TextButton>
             </SectionHeader>
 
@@ -773,7 +794,7 @@ const Dashboard = () => {
                 </ManifestoStat>
               </ManifestoSummary>
 
-              {manifesto.map((item) => (
+              {visibleRows(manifesto, "manifesto").map((item) => (
                 <ManifestoRow
                   key={item.issueCategory}
                 >
@@ -820,7 +841,7 @@ const Dashboard = () => {
 
             <SectionHeader>
               <div>
-                <SectionTitle>
+<SectionTitle>
                   Community Issues
                 </SectionTitle>
 
@@ -830,7 +851,9 @@ const Dashboard = () => {
                 </SectionDescription>
               </div>
 
-              <TextButton>View all</TextButton>
+              <TextButton onClick={() => toggleSection("issues")} aria-expanded={!!expandedSections.issues}>
+                {expandedSections.issues ? "Show less" : "View all"}
+              </TextButton>
             </SectionHeader>
 
             <Card>
@@ -840,7 +863,7 @@ const Dashboard = () => {
                 <span>Status</span>
               </IssueHeader>
 
-              {issues.map((issue) => (
+              {visibleRows(issues, "issues").map((issue) => (
                 <IssueRow key={issue.title}>
                   <IssueMain>
                     <IssueTitle>
@@ -870,7 +893,7 @@ const Dashboard = () => {
 
             <SectionHeader>
               <div>
-                <SectionTitle>
+<SectionTitle>
                   Strategic and Analytical Community
                   Engagement
                 </SectionTitle>
@@ -881,7 +904,9 @@ const Dashboard = () => {
                 </SectionDescription>
               </div>
 
-              <TextButton>View all</TextButton>
+              <TextButton onClick={() => toggleSection("engagements")} aria-expanded={!!expandedSections.engagements}>
+                {expandedSections.engagements ? "Show less" : "View all"}
+              </TextButton>
             </SectionHeader>
 
             <Card>
@@ -938,7 +963,7 @@ const Dashboard = () => {
                 <span>Engagement</span>
               </EngagementHeader>
 
-              {engagements.map((engagement) => (
+              {visibleRows(engagements, "engagements").map((engagement) => (
                 <EngagementRow
                   key={engagement.pollingStation}
                 >
@@ -1006,11 +1031,13 @@ const Dashboard = () => {
                 </SectionDescription>
               </div>
 
-              <TextButton>Manage</TextButton>
+              <TextButton onClick={() => toggleSection("activities")} aria-expanded={!!expandedSections.activities}>
+                {expandedSections.activities ? "Show less" : "View all"}
+              </TextButton>
             </SectionHeader>
 
             <Card>
-              {activities.map((activity) => (
+              {visibleRows(activities, "activities").map((activity) => (
                 <ActivityRow
                   key={`${activity.title}-${activity.date}`}
                 >
@@ -1058,14 +1085,18 @@ const Dashboard = () => {
                   Recent Activity
                 </SectionTitle>
 
-                <SectionDescription>
+<SectionDescription>
                   Latest changes across the dashboard.
                 </SectionDescription>
               </div>
+
+              <TextButton onClick={() => toggleSection("recentActivity")} aria-expanded={!!expandedSections.recentActivity}>
+                {expandedSections.recentActivity ? "Show less" : "View all"}
+              </TextButton>
             </SectionHeader>
 
             <Card>
-              {recentActivity.map((activity) => (
+              {visibleRows(recentActivity, "recentActivity").map((activity) => (
                 <RecentRow
                   key={`${activity.date}-${activity.text}`}
                 >
@@ -1105,7 +1136,7 @@ const Dashboard = () => {
             </SectionHeader>
 
             <Card>
-              {electionDates.map((item) => (
+              {visibleRows(electionDates, "electionDates").map((item) => (
                 <CalendarItem key={item.targetDate}>
                   <CalendarTop>
                     <CalendarDate>
@@ -1129,8 +1160,8 @@ const Dashboard = () => {
                 </CalendarItem>
               ))}
 
-              <CalendarFooter>
-                View full election calendar →
+<CalendarFooter onClick={() => toggleSection("electionDates")} role="button" tabIndex={0}>
+                {expandedSections.electionDates ? "Show less ↑" : "View full election calendar →"}
               </CalendarFooter>
             </Card>
 
@@ -1149,7 +1180,12 @@ const Dashboard = () => {
 
 const Page = styled.div`
   min-height: 100vh;
-  background: #f6f7f9;
+  background: linear-gradient(135deg, #f8fafc 0%, #f4f6f8 100%);
+  -webkit-font-smoothing: antialiased;
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
   color: #17202a;
 
   font-family:
@@ -1474,9 +1510,10 @@ const TextButton = styled.button`
 `;
 
 const Card = styled.div`
-  background: #ffffff;
-  border: 1px solid #eaecf0;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #e4e7ec;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.045);
   overflow: hidden;
 `;
 
