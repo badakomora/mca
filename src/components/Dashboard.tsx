@@ -669,7 +669,7 @@ const Dashboard = () => {
         <ProfileCard>
           <ProfileLeft>
           <Avatar>
-  <img src="/logo.jpeg" alt="Hon Huka" />
+  <img src="/huka.jpeg" alt="Hon Huka" />
 </Avatar>
             <div>
               <ProfileName>
@@ -1241,7 +1241,7 @@ const Header = styled.header`
   margin-bottom: 18px;
   border: 1px solid #d9e2ec;
   border-radius: 20px;
-  background: linear-gradient(135deg, #102a43 0%, #1f4e79 58%, #2c7a7b 100%);
+  background: linear-gradient(135deg, #9a3412 0%, #f97316 58%, #f59e0b 100%);
   box-shadow: 0 18px 38px rgba(16, 42, 67, 0.16);
 
   h1, p, div { color: #ffffff; }
