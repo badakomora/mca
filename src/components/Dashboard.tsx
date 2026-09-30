@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 
@@ -596,6 +598,7 @@ const completedEngagements = engagements.filter(
 
 const Dashboard = () => {
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
+  const [updateMessage, setUpdateMessage] = useState("");
 
   const toggleSection = (section: string) => {
     setExpandedSections((current) => ({
@@ -606,6 +609,27 @@ const Dashboard = () => {
 
   const visibleRows = <T,>(rows: T[], section: string) =>
     expandedSections[section] ? rows : rows.slice(0, 7);
+
+  const exportReport = () => {
+    const report = [
+      "SHIMANZI/GANJONI WARD ACCOUNTABILITY",
+      "MCA Dashboard",
+      `Supporters: ${currentSupporters.toLocaleString()}`,
+      `Community issues: ${issueResolved} resolved of ${issueRaised}`,
+      `Activities: ${completedActivities} completed of ${activities.length}`,
+      `Polling stations: ${engagements.length}`,
+    ].join("\\n");
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob([report], { type: "text/plain" }));
+    link.download = "mca-dashboard-report.txt";
+    link.click();
+    URL.revokeObjectURL(link.href);
+    setUpdateMessage("Report downloaded");
+  };
+
+  const addUpdate = () => {
+    setUpdateMessage("Update capture is ready — connect this action to your updates workflow.");
+  };
 
   return (
     <Page>
@@ -629,13 +653,14 @@ const Dashboard = () => {
           </div>
 
           <HeaderActions>
-            <Button variant="secondary">
+            <Button variant="secondary" onClick={exportReport}>
               Export Report
             </Button>
 
-            <Button>+ Add Update</Button>
+            <Button onClick={addUpdate}>+ Add Update</Button>
           </HeaderActions>
         </Header>
+        {updateMessage && <ActionMessage role="status">{updateMessage}</ActionMessage>}
 
         {/* ---------------------------------------------------------------- */}
         {/* Candidate / Election Overview */}
@@ -1212,7 +1237,19 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: flex-end;
   gap: 24px;
-  margin-bottom: 28px;
+  padding: 26px 28px;
+  margin-bottom: 18px;
+  border: 1px solid #d9e2ec;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #102a43 0%, #1f4e79 58%, #2c7a7b 100%);
+  box-shadow: 0 18px 38px rgba(16, 42, 67, 0.16);
+
+  h1, p, div { color: #ffffff; }
+  p { color: rgba(255, 255, 255, 0.76); }
+
+  @media (max-width: 760px) {
+    padding: 22px;
+  }
 
   @media (max-width: 760px) {
     align-items: flex-start;
@@ -1241,6 +1278,14 @@ const Subtitle = styled.p`
   font-size: 14px;
   max-width: 680px;
   line-height: 1.6;
+`;
+
+const ActionMessage = styled.div`
+  margin: -8px 0 16px;
+  color: #0f766e;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
 `;
 
 const HeaderActions = styled.div`
@@ -1281,8 +1326,17 @@ const Button = styled.button<{
   font-weight: 600;
   cursor: pointer;
 
+  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+
   &:hover {
-    opacity: 0.88;
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(16, 24, 40, 0.12);
+  }
+
+  &:focus-visible, &:active {
+    outline: 3px solid rgba(44, 122, 123, 0.28);
+    outline-offset: 2px;
   }
 `;
 
